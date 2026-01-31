@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click for Confetti</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #111; /* Dark background to make colors pop */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            user-select: none; /* Prevents text highlighting on rapid clicks */
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+            flex-direction: column;
+            pointer-events: none; /* Let clicks pass through to the body */
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        p {
+            opacity: 0.7;
+            font-size: 1.2rem;
+        }
+
+        /* Hint animation */
+        .click-hint {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Pop! 🎉</h1>
+        <p>Click anywhere on the screen.</p>
+        <div class="click-hint">Try rapid clicking!</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+    <script>
+        // Main Click Listener
+        document.addEventListener('click', (e) => {
+            // Get normalized coordinates (0 to 1) based on viewport size
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            // Trigger the confetti
+            confetti({
+                origin: { x: x, y: y }, // burst location
+                particleCount: 100,     // density
+                spread: 70,             // how wide the burst is
+                startVelocity: 30,      // speed of particles
+                gravity: 1,             // gravity pull
+                decay: 0.9,             // how fast they slow down
+                scalar: 1.2,            // size of particles
+                ticks: 60               // duration
+            });
+
+            // Optional: Randomize colors slightly for variety
+            // You can add specific hex codes in a 'colors' array property if desired
+        });
+
+        // Mobile touch support
+        document.addEventListener('touchstart', (e) => {
+             // Prevent default to avoid double-firing on some devices if they emulate click
+             // but we keep it simple here.
+             const touch = e.touches[0];
+             const x = touch.clientX / window.innerWidth;
+             const y = touch.clientY / window.innerHeight;
+             
+             confetti({
+                origin: { x: x, y: y },
+                particleCount: 80,
+                spread: 60,
+             });
+        });
+    </script>
+</body>
+</html>

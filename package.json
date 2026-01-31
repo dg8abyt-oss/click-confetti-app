@@ -1,0 +1,12 @@
+{
+  "name": "click-confetti-app",
+  "version": "1.0.0",
+  "description": "A screen-wide confetti interaction",
+  "scripts": {
+    "start": "serve ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "serve": "^14.0.0"
+  }
+}
